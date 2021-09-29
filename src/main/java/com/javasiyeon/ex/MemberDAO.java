@@ -26,12 +26,12 @@ public class MemberDAO {
 	}
 	
 	public int insertMember(MemberDTO dto) {
-		int ri = 0;
+		int ri=0;
 		
 		Connection conn = null;
 		PreparedStatement pstmt = null;
-		String query = "insert into memberex (?, ?, ?, ?, ?)"; //* ()안에 값을 안넣어도 자동으로 들어감 갯수에 맞춰서 ? 넣어주면 댐
-		// ResultSet rs = null;
+		String query = "insert into memberex values (?,?,?,?,?)"; //* ()안에 값을 안넣어도 자동으로 들어감 갯수에 맞춰서 ? 넣어주면 댐
+		//ResultSet rs = null;
 		
 		
 		try {
@@ -41,12 +41,12 @@ public class MemberDAO {
 			pstmt.setString(1, dto.getId());
 			pstmt.setString(2, dto.getPw());
 			pstmt.setString(3, dto.getName());
-			pstmt.setString(4, dto.getE_mail());
+			pstmt.setString(4, dto.getEmail());
 			pstmt.setString(5, dto.getAddress());
 			
 			pstmt.executeUpdate();
-			ri = MemberDAO.MEMBER_JOIN_SUCCESS;
-		} catch (SQLException e) {
+			ri = MemberDAO.MEMBER_JOIN_SUCCESS;	
+		} catch (Exception e) {										//* 범위가 젤 큰 Exception를 사용하는게 좋다
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
@@ -67,14 +67,14 @@ public class MemberDAO {
 	private Connection getConnection() {
 		
 		Context context = null;
-		DataSource dataSource = null;
+		DataSource dataSource = null; 
 		Connection conn = null;
 		
 		try {
 			context = new InitialContext();
 			dataSource = (DataSource)context.lookup("java:comp/env/jdbc/Oracle11g");
 			conn = dataSource.getConnection();
-		} catch (Exception e) {								//* Exception이 젤 크다.
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
